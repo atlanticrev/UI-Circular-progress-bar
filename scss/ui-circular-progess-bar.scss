@@ -1,0 +1,98 @@
+@mixin ui-circular-progess-bar($size: 80px) {
+  --percent: 25;
+
+  --track-color: #EEEEEE;
+  // --progress-color: #94F2BF;
+
+  --size: #{$size};
+  --stroke-width: 4px;
+
+  $instagram-start: #E5A559;
+  $instagram-stop: #A91C8D;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  [data-name="container"] {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+
+    // Фикс для chrome, чтобы показывал скругленные углы
+    transform: translate(0, 0);
+
+    [data-name="avatar"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      background: var(--img) no-repeat center center;
+      background-size: cover;
+    }
+
+    [data-name="track"] {
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: transparent;
+      border: var(--stroke-width) solid var(--track-color);
+      border-radius: 50%;
+    }
+
+    svg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+
+      // Gradient settings
+      [offset="0%"] {
+        stop-color: $instagram-start;
+        stop-opacity: 1;
+      }
+
+      [offset="100%"] {
+        stop-color: $instagram-stop;
+        stop-opacity: 1;
+      }
+
+      circle {
+        --radius: calc(var(--size) / 2 - var(--stroke-width) / 2);
+        --dashes: calc(var(--radius) * 3.14159 * 2);
+
+        r: var(--radius);
+        cx: 50%;
+        cy: 50%;
+
+        stroke-width: var(--stroke-width);
+        stroke: url(#instagram-gradient);
+        fill: transparent;
+        stroke-dasharray: var(--dashes);
+        stroke-dashoffset: calc((100 - var(--percent)) * (var(--dashes) / 100));
+
+        transform-origin: center;
+        transform: rotate(-90deg);
+
+        transition: stroke-dashoffset .5s;
+      }
+    }
+  }
+}

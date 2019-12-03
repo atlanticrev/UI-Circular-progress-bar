@@ -1,0 +1,78 @@
+ui-circular-progress-bar {
+  --percent: 25;
+  --track-color: #EEEEEE;
+  --size: 80px;
+  --stroke-width: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+ui-circular-progress-bar * {
+  box-sizing: border-box;
+}
+ui-circular-progress-bar [data-name=container] {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transform: translate(0, 0);
+}
+ui-circular-progress-bar [data-name=container] [data-name=avatar] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  background: var(--img) no-repeat center center;
+  background-size: cover;
+}
+ui-circular-progress-bar [data-name=container] [data-name=track] {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  border: var(--stroke-width) solid var(--track-color);
+  border-radius: 50%;
+}
+ui-circular-progress-bar [data-name=container] svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+ui-circular-progress-bar [data-name=container] svg [offset="0%"] {
+  stop-color: #E5A559;
+  stop-opacity: 1;
+}
+ui-circular-progress-bar [data-name=container] svg [offset="100%"] {
+  stop-color: #A91C8D;
+  stop-opacity: 1;
+}
+ui-circular-progress-bar [data-name=container] svg circle {
+  --radius: calc(var(--size) / 2 - var(--stroke-width) / 2);
+  --dashes: calc(var(--radius) * 3.14159 * 2);
+  r: var(--radius);
+  cx: 50%;
+  cy: 50%;
+  stroke-width: var(--stroke-width);
+  stroke: url(#instagram-gradient);
+  fill: transparent;
+  stroke-dasharray: var(--dashes);
+  stroke-dashoffset: calc((100 - var(--percent)) * (var(--dashes) / 100));
+  transform-origin: center;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset 0.5s;
+}
+
+/*# sourceMappingURL=index.css.map */
